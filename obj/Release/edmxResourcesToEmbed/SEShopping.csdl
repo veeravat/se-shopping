@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="seshopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="SESHOP_Shop_member">
+    <Key>
+      <PropertyRef Name="memberID" />
+    </Key>
+    <Property Name="memberID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="memberName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="memberTel" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="memberEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="SESHOP_Shop_Order" Relationship="Self.FK_SESHOP_Shop_Order_SESHOP_Shop_member_memberID1" FromRole="SESHOP_Shop_member" ToRole="SESHOP_Shop_Order" />
+  </EntityType>
+  <EntityType Name="SESHOP_Shop_Order">
+    <Key>
+      <PropertyRef Name="orderID" />
+    </Key>
+    <Property Name="orderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="memberID1" Type="Int32" />
+    <Property Name="orderStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="SESHOP_Shop_member" Relationship="Self.FK_SESHOP_Shop_Order_SESHOP_Shop_member_memberID1" FromRole="SESHOP_Shop_Order" ToRole="SESHOP_Shop_member" />
+    <NavigationProperty Name="SESHOP_Shop_Order_Item" Relationship="Self.FK_SESHOP_Shop_Order_Item_SESHOP_Shop_Order_ShopOrderorderID" FromRole="SESHOP_Shop_Order" ToRole="SESHOP_Shop_Order_Item" />
+    <NavigationProperty Name="SESHOP_Shop_Order_Payment" Relationship="Self.FK_SESHOP_Shop_Order_Payment_SESHOP_Shop_Order_orderID1" FromRole="SESHOP_Shop_Order" ToRole="SESHOP_Shop_Order_Payment" />
+  </EntityType>
+  <EntityType Name="SESHOP_Shop_Order_Item">
+    <Key>
+      <PropertyRef Name="orderItemID" />
+    </Key>
+    <Property Name="orderItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="productID1" Type="Int32" />
+    <Property Name="qty" Type="Int32" Nullable="false" />
+    <Property Name="ShopOrderorderID" Type="Int32" />
+    <NavigationProperty Name="SESHOP_Shop_Order" Relationship="Self.FK_SESHOP_Shop_Order_Item_SESHOP_Shop_Order_ShopOrderorderID" FromRole="SESHOP_Shop_Order_Item" ToRole="SESHOP_Shop_Order" />
+    <NavigationProperty Name="SESHOP_Shop_Product" Relationship="Self.FK_SESHOP_Shop_Order_Item_SESHOP_Shop_Product_productID1" FromRole="SESHOP_Shop_Order_Item" ToRole="SESHOP_Shop_Product" />
+  </EntityType>
+  <EntityType Name="SESHOP_Shop_Order_Payment">
+    <Key>
+      <PropertyRef Name="paymentID" />
+    </Key>
+    <Property Name="paymentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="orderID1" Type="Int32" />
+    <Property Name="channel" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="payment_ref" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="SESHOP_Shop_Order" Relationship="Self.FK_SESHOP_Shop_Order_Payment_SESHOP_Shop_Order_orderID1" FromRole="SESHOP_Shop_Order_Payment" ToRole="SESHOP_Shop_Order" />
+  </EntityType>
+  <EntityType Name="SESHOP_Shop_Product">
+    <Key>
+      <PropertyRef Name="productID" />
+    </Key>
+    <Property Name="productID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="productName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="productPrice" Type="Double" Nullable="false" />
+    <NavigationProperty Name="SESHOP_Shop_Order_Item" Relationship="Self.FK_SESHOP_Shop_Order_Item_SESHOP_Shop_Product_productID1" FromRole="SESHOP_Shop_Product" ToRole="SESHOP_Shop_Order_Item" />
+    <Property Name="productImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="productDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="productDimension" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_SESHOP_Shop_Order_SESHOP_Shop_member_memberID1">
+    <End Role="SESHOP_Shop_member" Type="Self.SESHOP_Shop_member" Multiplicity="0..1" />
+    <End Role="SESHOP_Shop_Order" Type="Self.SESHOP_Shop_Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SESHOP_Shop_member">
+        <PropertyRef Name="memberID" />
+      </Principal>
+      <Dependent Role="SESHOP_Shop_Order">
+        <PropertyRef Name="memberID1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SESHOP_Shop_Order_Item_SESHOP_Shop_Order_ShopOrderorderID">
+    <End Role="SESHOP_Shop_Order" Type="Self.SESHOP_Shop_Order" Multiplicity="0..1" />
+    <End Role="SESHOP_Shop_Order_Item" Type="Self.SESHOP_Shop_Order_Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SESHOP_Shop_Order">
+        <PropertyRef Name="orderID" />
+      </Principal>
+      <Dependent Role="SESHOP_Shop_Order_Item">
+        <PropertyRef Name="ShopOrderorderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SESHOP_Shop_Order_Payment_SESHOP_Shop_Order_orderID1">
+    <End Role="SESHOP_Shop_Order" Type="Self.SESHOP_Shop_Order" Multiplicity="0..1" />
+    <End Role="SESHOP_Shop_Order_Payment" Type="Self.SESHOP_Shop_Order_Payment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SESHOP_Shop_Order">
+        <PropertyRef Name="orderID" />
+      </Principal>
+      <Dependent Role="SESHOP_Shop_Order_Payment">
+        <PropertyRef Name="orderID1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SESHOP_Shop_Order_Item_SESHOP_Shop_Product_productID1">
+    <End Role="SESHOP_Shop_Product" Type="Self.SESHOP_Shop_Product" Multiplicity="0..1" />
+    <End Role="SESHOP_Shop_Order_Item" Type="Self.SESHOP_Shop_Order_Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SESHOP_Shop_Product">
+        <PropertyRef Name="productID" />
+      </Principal>
+      <Dependent Role="SESHOP_Shop_Order_Item">
+        <PropertyRef Name="productID1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="seshop" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="SESHOP_Shop_member" EntityType="Self.SESHOP_Shop_member" />
+    <EntitySet Name="SESHOP_Shop_Order" EntityType="Self.SESHOP_Shop_Order" />
+    <EntitySet Name="SESHOP_Shop_Order_Item" EntityType="Self.SESHOP_Shop_Order_Item" />
+    <EntitySet Name="SESHOP_Shop_Order_Payment" EntityType="Self.SESHOP_Shop_Order_Payment" />
+    <EntitySet Name="SESHOP_Shop_Product" EntityType="Self.SESHOP_Shop_Product" />
+    <AssociationSet Name="FK_SESHOP_Shop_Order_SESHOP_Shop_member_memberID1" Association="Self.FK_SESHOP_Shop_Order_SESHOP_Shop_member_memberID1">
+      <End Role="SESHOP_Shop_member" EntitySet="SESHOP_Shop_member" />
+      <End Role="SESHOP_Shop_Order" EntitySet="SESHOP_Shop_Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SESHOP_Shop_Order_Item_SESHOP_Shop_Order_ShopOrderorderID" Association="Self.FK_SESHOP_Shop_Order_Item_SESHOP_Shop_Order_ShopOrderorderID">
+      <End Role="SESHOP_Shop_Order" EntitySet="SESHOP_Shop_Order" />
+      <End Role="SESHOP_Shop_Order_Item" EntitySet="SESHOP_Shop_Order_Item" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SESHOP_Shop_Order_Payment_SESHOP_Shop_Order_orderID1" Association="Self.FK_SESHOP_Shop_Order_Payment_SESHOP_Shop_Order_orderID1">
+      <End Role="SESHOP_Shop_Order" EntitySet="SESHOP_Shop_Order" />
+      <End Role="SESHOP_Shop_Order_Payment" EntitySet="SESHOP_Shop_Order_Payment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SESHOP_Shop_Order_Item_SESHOP_Shop_Product_productID1" Association="Self.FK_SESHOP_Shop_Order_Item_SESHOP_Shop_Product_productID1">
+      <End Role="SESHOP_Shop_Product" EntitySet="SESHOP_Shop_Product" />
+      <End Role="SESHOP_Shop_Order_Item" EntitySet="SESHOP_Shop_Order_Item" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,77 @@
+﻿@model IEnumerable<ShoppingModule.SESHOP_Shop_Product>
+@{
+    ViewBag.Title = "Home Page";
+}
+@section NavClass{
+    bar--transparent
+}
+<section class="cover cover-features imagebg space--lg parallax" data-overlay="2">
+    <div class="background-image-holder"> <img alt="background" src="/img/hero-2.jpg"> </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-lg-7">
+                <h1>Welcome to SE Shopping website </h1>
+                <p class="lead"> The world best selling solution. </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="feature feature-2 boxed boxed--border bg--white">
+                    <i class="icon icon-Clock-Back color--primary"></i>
+                    <div class="feature__body">
+                        <p> 1 Free 1 Event !! </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature feature-2 boxed boxed--border bg--white">
+                    <i class="icon icon-Duplicate-Window color--primary"></i>
+                    <div class="feature__body">
+                        <p> Black Friday SALE !! </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature feature-2 boxed boxed--border bg--white">
+                    <i class="icon icon-Life-Jacket color--primary"></i>
+                    <div class="feature__body">
+                        <p> Contact US </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Marketplace</h1>
+                <hr>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <div class="masonry">
+            <div class="masonry__container row masonry--active">
+                @foreach (var item in Model)
+                {
+                    <div class="masonry__item col-md-4">
+                        <div class="product">
+                            <a href="/Shop/Details/@Html.DisplayFor(modelItem => item.productID)"> <img alt="Image" src="~/img/productImage/@Html.DisplayFor(modelItem => item.productImage)"> </a>
+                            <a class="block" href="#">
+                                <div>
+                                    <h5>@Html.DisplayFor(modelItem => item.productName)</h5>
+                                </div>
+                                <div> <span class="h4 inline-block">@Html.DisplayFor(modelItem => item.productPrice) ฿</span> </div>
+                            </a>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>
