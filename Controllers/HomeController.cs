@@ -11,8 +11,10 @@ namespace ShoppingModule.Controllers
     public class HomeController : Controller
     {
         private seshop db = new seshop();
+       
         public async Task<ActionResult> Index()
         {
+            ViewData["UserProfile"] = Session["UserProfile"];
             return View(await db.SESHOP_Shop_Product.ToListAsync());
         }
 
@@ -27,6 +29,12 @@ namespace ShoppingModule.Controllers
         {
             ViewBag.Message = "Your contact page.";
 
+            return View();
+        }
+
+        public ActionResult Login()
+        {
+            ViewData["UserProfile"] = Session["UserProfile"];
             return View();
         }
     }

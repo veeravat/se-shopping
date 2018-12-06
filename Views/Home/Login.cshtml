@@ -1,0 +1,63 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutFull.cshtml";
+    ViewBag.Title = "Login";
+}
+
+
+@if (Session["UserProfile"] != null)
+{
+    SESHOP_Shop_member member = ViewData["UserProfile"] as SESHOP_Shop_member;
+
+}
+
+<section class="height-100 imagebg text-center" data-overlay="4">
+    <div class="background-image-holder"><img alt="background" src="img/inner-5.jpg"></div>
+    <div class="container pos-vertical-center">
+        <div class="row">
+            <div class="col-md-7 col-lg-5">
+                <h2>Login to continue</h2>
+                <p class="lead"> Welcome back, sign in with your existing account</p>
+                <form>
+                    <div class="row">
+                        <div class="col-md-12"> <input id="email" type="email" placeholder="Email"> </div>
+                        <div class="col-md-12"> <input id="password" type="password" placeholder="Password"> </div>
+                        <div class="col-md-12"> <button id="LoginBtn" class="btn btn--primary type--uppercase" type="submit">Login</button> </div>
+                    </div>
+                </form>
+                <span class="type--fine-print block">Dont have an account yet? <a href="/register">Create account</a></span>
+            </div>
+        </div>
+    </div>
+</section>
+@section scripts
+{
+    <script>
+        $("#LoginBtn").click(function (e) {
+            e.preventDefault();
+
+            var email = $("#email").val();
+            var password = $("#password").val();
+            if (validateEmail(email) && password.length > 5) {
+                $.post("/member/login",
+                    {
+                        email: email,
+                        password: password
+                    }).done(function (data) {
+                        if (!data.status) {
+                            alert("Invalid login")
+                        } else {
+                            window.location.href = "/";
+                        }
+                        console.log(data);
+                    })
+            } else {
+                alert("Invalid input")
+            }
+
+        })
+        function validateEmail(email) {
+            var re = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+            return re.test(String(email).toLowerCase());
+        }
+    </script>
+}

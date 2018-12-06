@@ -61,13 +61,45 @@
                                 </ul>
                             </div>
                         </div>
+
                         <div class="col-lg-5 text-right text-left-xs text-left-sm order-lg-3">
                             <div class="bar__module">
-                                <a class="btn btn--sm type--uppercase btn--primary" href="#">
-                                    <span class="btn__text ">
-                                        Login
-                                    </span>
-                                </a>
+
+                                @{
+                                    SESHOP_Shop_member member = ViewData["UserProfile"] as SESHOP_Shop_member;
+                                    if (member != null)
+                                    {
+                                        <ul class="menu-horizontal text-left">
+                                            <li class="dropdown">
+                                                <span class="dropdown__trigger">
+                                                    <span class="btn__text ">
+                                                        @member.memberName
+                                                    </span>
+                                                </span>
+                                                <div class="dropdown__container">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="dropdown__content col-lg-2">
+                                                                <ul class="menu-vertical">
+                                                                    <li> <a href="/cart">Cart</a> </li>
+                                                                    <li> <a href="/logout">Logout</a> </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn--sm type--uppercase btn--primary" href="/login">
+                                            <span class="btn__text ">
+                                                Login
+                                            </span>
+                                        </a>
+                                    }
+                                }
                             </div>
                         </div>
                     </div>

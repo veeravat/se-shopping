@@ -169,7 +169,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
+    <Compile Include="DTOS\MemberDtos.cs" />
+    <Compile Include="DTOS\ShopDtos.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -518,6 +521,7 @@
     <Content Include="img\tourism-7.jpg" />
     <Content Include="img\tourism-8.jpg" />
     <Content Include="img\tourism-9.jpg" />
+    <Content Include="img\visa.jpg" />
     <Content Include="img\wedding-1.jpg" />
     <Content Include="img\wedding-2.jpg" />
     <Content Include="img\wedding-3.jpg" />
@@ -548,6 +552,7 @@
     <Content Include="fonts\stack-interface.ttf" />
     <Content Include="fonts\stack-interface.woff" />
     <Content Include="fonts\stack-interface.woff2" />
+    <Content Include=".gitignore" />
     <None Include="Properties\PublishProfiles\seshopping - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\countdown.min.js" />
@@ -613,6 +618,16 @@
     <Content Include="Views\Shop\Details.cshtml" />
     <Content Include="Views\Shop\Edit.cshtml" />
     <Content Include="Views\Shop\Index.cshtml" />
+    <Content Include="Views\Member\Create.cshtml" />
+    <Content Include="Views\Member\Delete.cshtml" />
+    <Content Include="Views\Member\Details.cshtml" />
+    <Content Include="Views\Member\Edit.cshtml" />
+    <Content Include="Views\Member\Index.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Shared\_LayoutFull.cshtml" />
+    <Content Include="Views\Member\Register.cshtml" />
+    <Content Include="Views\Shop\getCart.cshtml" />
+    <Content Include="Views\Shop\checkout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

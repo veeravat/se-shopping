@@ -6,12 +6,18 @@
 @section excss{
     <link href="~/Content/flickity.css" rel="stylesheet" type="text/css" media="all" />
 }
-@section scripts{
-    <script src="~/Scripts/flickity.min.js"></script>
-}
+
 
 @section NavClass{
     bg--dark
+}
+@{
+    SESHOP_Shop_member member = null;
+    if (Session["UserProfile"] != null)
+    {
+        member = ViewData["UserProfile"] as SESHOP_Shop_member;
+    }
+
 }
 <section>
     <div class="container">
@@ -62,10 +68,43 @@
                     </li>
                 </ul>
                 <form>
-                    <div class="col-md-6 col-lg-4"> <input type="text" name="quantity" placeholder="QTY"> </div>
-                    <div class="col-md-6 col-lg-8"> <button type="submit" class="btn btn--primary">Add To Cart</button> </div>
+                    <div class="col-md-6 col-lg-4"> <input id="qty" type="text" name="quantity" placeholder="QTY"> </div>
+                    @if (member != null)
+                    {
+                        <div class="col-md-6 col-lg-8"> <button id="addCart" type="submit" class="btn btn--primary">Add To Cart</button> </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-6 col-lg-8"> <button type="submit" class="btn btn--primary" disabled>Login first</button> </div>
+
+                    }
                 </form>
             </div>
         </div>
     </div>
 </section>
+
+@section scripts
+{
+    <script src="~/Scripts/flickity.min.js"></script>
+    <script>
+        $("#addCart").click(function (e) {
+            e.preventDefault();
+
+            $.post("/Shop/cart",
+                {
+                    productID: "@Html.DisplayFor(model => model.productID)",
+                    qty: $("#qty").val()
+                }).done(function (data) {
+                    if (!data.status) {
+                        alert("Add cart fail !!")
+                    } else {
+                        alert("Successful add cart!!")
+                        //window.location.href = "/";
+                    }
+                    console.log(data);
+                })
+
+        })
+    </script>
+}

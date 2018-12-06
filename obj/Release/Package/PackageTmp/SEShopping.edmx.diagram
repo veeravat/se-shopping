@@ -5,11 +5,11 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="70722e42a6eb40c7ba855dd3a2d22c2c" Name="Diagram1">
-        <EntityTypeShape EntityType="seshopModel.SESHOP_Shop_member" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="seshopModel.SESHOP_Shop_Order" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="seshopModel.SESHOP_Shop_Order_Item" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="seshopModel.SESHOP_Shop_Order_Payment" Width="1.5" PointX="5.25" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="seshopModel.SESHOP_Shop_Product" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="seshopModel.SESHOP_Shop_member" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="seshopModel.SESHOP_Shop_Order" Width="1.875" PointX="3" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="seshopModel.SESHOP_Shop_Order_Item" Width="1.5" PointX="5.625" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="seshopModel.SESHOP_Shop_Order_Payment" Width="1.5" PointX="5.625" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="seshopModel.SESHOP_Shop_Product" Width="1.5" PointX="8" PointY="4.25" IsExpanded="true" />
         <AssociationConnector Association="seshopModel.FK_SESHOP_Shop_Order_SESHOP_Shop_member_memberID1" ManuallyRouted="false" />
         <AssociationConnector Association="seshopModel.FK_SESHOP_Shop_Order_Item_SESHOP_Shop_Order_ShopOrderorderID" ManuallyRouted="false" />
         <AssociationConnector Association="seshopModel.FK_SESHOP_Shop_Order_Payment_SESHOP_Shop_Order_orderID1" ManuallyRouted="false" />

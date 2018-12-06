@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ShoppingModule.DTOS;
+using System;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using ShoppingModule;
 
 namespace ShoppingModule.Controllers
 {
     public class ShopController : Controller
     {
         private seshop db = new seshop();
-
         // GET: Shop
         public async Task<ActionResult> Index()
         {
@@ -24,6 +21,7 @@ namespace ShoppingModule.Controllers
         // GET: Shop/Details/5
         public async Task<ActionResult> Details(int? id)
         {
+            ViewData["UserProfile"] = Session["UserProfile"];
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -40,6 +38,93 @@ namespace ShoppingModule.Controllers
         public ActionResult Create()
         {
             return View();
+        }
+
+        //[HttpGet, ActionName("cart")]
+        public ActionResult getCart()
+        {
+            ViewData["UserProfile"] = Session["UserProfile"];
+            ViewData["Order"] = Session["Order"];
+            return View();
+        }
+        [HttpPost, ActionName("payment")]
+        public async Task<ActionResult> payment(PaymentDto payDetail)
+        {
+            //Random ref number from fake card
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            Random random = new Random();
+            var refer = new string(Enumerable.Repeat(chars, 20)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+
+            var payment = new SESHOP_Shop_Order_Payment();
+            payment.channel = payDetail.cardNumber;
+            payment.payment_ref = refer;
+
+            var Smember = Session["UserProfile"] as SESHOP_Shop_member;
+            var Sorder = Session["Order"] as SESHOP_Shop_Order;
+
+            var member = await db.SESHOP_Shop_member.FindAsync(Smember.memberID);
+            var order = new SESHOP_Shop_Order();
+            foreach (var product in Sorder.SESHOP_Shop_Order_Item)
+            {
+                
+                var productItem = await db.SESHOP_Shop_Product.FindAsync(product.SESHOP_Shop_Product.productID);
+
+                var orderItem = new SESHOP_Shop_Order_Item();
+                orderItem.productID1 = productItem.productID;
+                orderItem.qty = product.qty;
+
+                order.SESHOP_Shop_Order_Item.Add(orderItem);
+            }
+
+            order.orderStatus = "paymentComplete";
+            order.SESHOP_Shop_member = member;
+            db.SESHOP_Shop_Order.Add(order);
+
+            payment.SESHOP_Shop_Order = order;
+
+            db.SESHOP_Shop_Order_Payment.Add(payment);
+
+
+            await db.SaveChangesAsync();
+
+            Session["Order"] = null;
+            return Json(new
+            {
+                status = true
+            });
+        }
+        [HttpPost, ActionName("cart")]
+        public async Task<ActionResult> Cart(CartDto cartItem)
+        {
+
+            if (Session["Order"] == null)
+            {
+                Session["Order"] = new SESHOP_Shop_Order();
+            }
+            var order = Session["Order"] as SESHOP_Shop_Order;
+
+            var product = await db.SESHOP_Shop_Product.FindAsync(cartItem.productID);
+
+            var orderItem = new SESHOP_Shop_Order_Item();
+            orderItem.SESHOP_Shop_Product = product;
+            orderItem.qty = cartItem.qty;
+
+            //var existed = order.SESHOP_Shop_Order_Item
+            //    .Where(x => x.SESHOP_Shop_Product.productID == cartItem.productID)
+            //    .First();
+            //if (existed != null)
+            //{
+
+            //}
+            order.SESHOP_Shop_Order_Item.Add(orderItem);
+
+            Session["Order"] = order;
+            return Json(new
+            {
+                status = true
+            });
+
         }
 
         // POST: Shop/Create

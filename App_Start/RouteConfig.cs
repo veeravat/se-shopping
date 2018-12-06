@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace ShoppingModule
@@ -12,7 +8,27 @@ namespace ShoppingModule
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            routes.MapRoute(
+                name: "Login",
+                url: "login",
+                defaults: new { controller = "Home", action = "Login" }
+            );
+            routes.MapRoute(
+                name: "Cart",
+                url: "cart",
+                defaults: new { controller = "Shop", action = "getCart" }
+            );
+            
+            routes.MapRoute(
+                name: "register",
+                url: "register",
+                defaults: new { controller = "Member", action = "Register" }
+            );
+            routes.MapRoute(
+                name: "logout",
+                url: "logout",
+                defaults: new { controller = "Member", action = "Logout" }
+            );
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

@@ -1,0 +1,215 @@
+﻿
+@{
+    ViewBag.Title = "Cart";
+}
+@{
+    SESHOP_Shop_Order order = null;
+    double total = 0;
+    if (Session["Order"] != null)
+    {
+        order = ViewData["Order"] as SESHOP_Shop_Order;
+    }
+
+}
+@section excss
+{
+    <style>
+        .pl-ziro {
+            padding-left: 0px;
+            margin-right: 0px;
+        }
+    </style>
+}
+<section style="padding-bottom:0px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Checkout</h1>
+                <ol class="breadcrumbs">
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
+                    <li>
+                        <a href="#">Shop</a>
+                    </li>
+                    <li>Checkout</li>
+                </ol>
+                <hr>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+<section>
+    <div class="container">
+        <form class="cart-form">
+            <div class="row" id="productView">
+
+                @{
+                    if (order != null)
+                    {
+
+                        foreach (var x in order.SESHOP_Shop_Order_Item)
+                        {
+                            total += x.SESHOP_Shop_Product.productPrice * x.qty;
+                            <div class="col-md-4">
+                                <div class="product">
+                                    <span class="label">QTY: @x.qty</span>
+                                    <img alt="Image" src="~/img/productImage/@x.SESHOP_Shop_Product.productImage" />
+                                    <div>
+                                        <h5>@x.SESHOP_Shop_Product.productName</h5>
+                                    </div>
+                                    <div>
+                                        <span class="h4 inline-block">@x.SESHOP_Shop_Product.productPrice.ToString("n") ฿</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end item-->
+                        }
+                    }
+
+                }
+
+
+            </div>
+            <!--end of row-->
+
+            <div class="row mt--2">
+                <div class="col-md-12">
+                    <div class="boxed boxed--border cart-total">
+                        <div class="row">
+                            <div class="col-6">
+                                <span class="h5">Cart Subtotal:</span>
+                            </div>
+                            <div class="col-6 text-right">
+                                <span>@total.ToString("n") ฿</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <span class="h5">Shipping (US):</span>
+                            </div>
+                            <div class="col-6 text-right">
+                                <span>FREE</span>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-6">
+                                <span class="h5">Total:</span>
+                            </div>
+                            <div class="col-6 text-right">
+                                <span class="h5">@total.ToString("n") ฿</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end of row-->
+            <div class="row mt--2 justify-content-center" id="CardPayment" style="display:none">
+                <div class="col-xs-12 col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                Payment Details
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="cardname">
+                                    CARD HOLDER NAME
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="cardname" placeholder="Valid Card Holder Name"
+                                           required value="DEMOCARD" />
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="cardNumber">
+                                    CARD NUMBER
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="cardNumber" placeholder="Valid Card Number"
+                                           required value="1111111111111111" />
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <label for="expityMonth">
+                                            EXPIRY DATE
+                                        </label>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <input type="text" id="expityMonth" placeholder="MM" required value="11" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="text" id="expityYear" placeholder="YY" required value="29" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 pull-right">
+                                    <div class="form-group">
+                                        <label for="cvCode">
+                                            CV CODE
+                                        </label>
+                                        <input type="password" class="form-control" id="cvCode" placeholder="CV" required value="111" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <button style="display:none;" id="payment" type="submit" class="btn btn--primary type--uppercase">Pay</button>
+
+            </div>
+            <!--end of row-->
+            <div class="row justify-content-end">
+                <div class="col-lg-2 col-md-3 text-right text-center-xs">
+                    <button id="checkout" type="submit" class="btn btn--primary type--uppercase">Checkout</button>
+                </div>
+            </div>
+            <!--end of row-->
+        </form>
+        <!--end checkout form-->
+    </div>
+    <!--end of container-->
+</section>
+
+@section scripts
+{
+    <script>
+        $("#checkout").click(function (e) {
+            e.preventDefault();
+            $("#productView").fadeOut();
+            $(this).hide()
+            $("#payment").fadeIn();
+            $("#CardPayment").fadeIn();
+        })
+
+        $("#payment").click(function (e) {
+            $.post("/Shop/payment",
+                {
+                    cardname: $("#cardname").val(),
+                    cardNumber: $("#cardNumber").val(),
+                    cardNumber: $("#expityMonth").val(),
+                    cardNumber: $("#expityYear").val(),
+                    cardNumber: $("#cvCode").val() ,
+                    totalPrice: @total
+                }).done(function (data) {
+                    if (!data.status) {
+                        alert("Add cart fail !!")
+                    } else {
+                        alert("Successful add cart!!")
+                        //window.location.href = "/";
+                    }
+                    console.log(data);
+                })
+        })
+    </script>
+}
