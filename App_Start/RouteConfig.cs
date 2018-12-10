@@ -18,7 +18,7 @@ namespace ShoppingModule
                 url: "cart",
                 defaults: new { controller = "Shop", action = "getCart" }
             );
-            
+
             routes.MapRoute(
                 name: "register",
                 url: "register",
@@ -28,6 +28,11 @@ namespace ShoppingModule
                 name: "logout",
                 url: "logout",
                 defaults: new { controller = "Member", action = "Logout" }
+            );
+            routes.MapRoute(
+                name: "history",
+                url: "history",
+                defaults: new { controller = "Shop", action = "getHistory" }
             );
             routes.MapRoute(
                 name: "Default",

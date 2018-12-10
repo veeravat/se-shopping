@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace ShoppingModule.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : Controller, IHomeController
     {
         private seshop db = new seshop();
        
@@ -16,20 +16,6 @@ namespace ShoppingModule.Controllers
         {
             ViewData["UserProfile"] = Session["UserProfile"];
             return View(await db.SESHOP_Shop_Product.ToListAsync());
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
 
         public ActionResult Login()

@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace ShoppingModule.Controllers
 {
-    public class ShopController : Controller
+    public class ShopController : Controller, IShopController
     {
         private seshop db = new seshop();
         // GET: Shop
@@ -47,6 +47,24 @@ namespace ShoppingModule.Controllers
             ViewData["Order"] = Session["Order"];
             return View();
         }
+
+        public async Task<ActionResult> getHistory()
+        {
+
+            if (Session["UserProfile"] == null)
+            {
+                return RedirectToAction("index", "home");
+            }
+
+            ViewData["UserProfile"] = Session["UserProfile"];
+            ViewData["Order"] = Session["Order"];
+            var Smember = Session["UserProfile"] as SESHOP_Shop_member;
+            var orderHistory = await db.SESHOP_Shop_Order
+                .Where(x => x.SESHOP_Shop_member.memberID == Smember.memberID)
+                .ToListAsync();
+
+            return View(orderHistory);
+        }
         [HttpPost, ActionName("payment")]
         public async Task<ActionResult> payment(PaymentDto payDetail)
         {
@@ -67,7 +85,7 @@ namespace ShoppingModule.Controllers
             var order = new SESHOP_Shop_Order();
             foreach (var product in Sorder.SESHOP_Shop_Order_Item)
             {
-                
+
                 var productItem = await db.SESHOP_Shop_Product.FindAsync(product.SESHOP_Shop_Product.productID);
 
                 var orderItem = new SESHOP_Shop_Order_Item();

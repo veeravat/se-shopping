@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ShoppingModule.SESHOP_Shop_Order>
+
+@{
+    ViewBag.Title = "getHistory";
+}
+@{
+    double total = 0;
+    int i = 1;
+}
+<section>
+    <div class="container">
+        <table class="border--round table--alternate-row">
+            <thead>
+                <tr>
+                    <th>Order</th>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Order status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.orderID</td>
+                        <td>
+                            @foreach (var orderItem in item.SESHOP_Shop_Order_Item)
+                            {
+                                <p>@i.@orderItem.SESHOP_Shop_Product.productName x @orderItem.qty</p>
+                                total += orderItem.SESHOP_Shop_Product.productPrice * orderItem.qty;
+                                i += 1;
+                            }
+                        </td>
+                        <td>
+                            @total.ToString("n")
+                        </td>
+                        <td>
+                            @if (@item.orderStatus == "paymentComplete")
+                            {
+                                <span>Waiting for shipment</span>
+                            }   
+                        </td>
+                    </tr>
+                    i = 1;
+                    total = 0;
+                }
+
+
+            </tbody>
+        </table>
+        <!--end checkout form-->
+    </div>
+    <!--end of container-->
+</section>
+
+
