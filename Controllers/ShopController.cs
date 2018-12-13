@@ -1,9 +1,11 @@
 ﻿using ShoppingModule.DTOS;
+using ShoppingModule.Services;
 using System;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -67,7 +69,7 @@ namespace ShoppingModule.Controllers
             var order = new SESHOP_Shop_Order();
             foreach (var product in Sorder.SESHOP_Shop_Order_Item)
             {
-                
+
                 var productItem = await db.SESHOP_Shop_Product.FindAsync(product.SESHOP_Shop_Product.productID);
 
                 var orderItem = new SESHOP_Shop_Order_Item();
@@ -85,15 +87,23 @@ namespace ShoppingModule.Controllers
 
             db.SESHOP_Shop_Order_Payment.Add(payment);
 
-
             await db.SaveChangesAsync();
+
+            bool isSend = false;
+            StringBuilder msgBody = new StringBuilder();
+            msgBody.AppendLine("Hello, " + member.memberName);
+            msgBody.AppendLine("Your Order #" + order.orderID + " has complete!!");
+            msgBody.AppendLine("<a href=\"https://seshopping.azurewebsites.net/history\">Click here to check shipping status</a>");
+            IEmail EmailClient = new Email();
+            isSend = await EmailClient.SendMailO365(member.memberEmail, "Your Order #" + order.orderID + " has complete!!", msgBody.ToString());
 
             Session["Order"] = null;
             return Json(new
             {
-                status = true
+                status = isSend
             });
         }
+
         [HttpPost, ActionName("cart")]
         public async Task<ActionResult> Cart(CartDto cartItem)
         {
