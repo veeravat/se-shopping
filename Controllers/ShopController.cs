@@ -111,7 +111,8 @@ namespace ShoppingModule.Controllers
             StringBuilder msgBody = new StringBuilder();
             msgBody.AppendLine("Hello, " + member.memberName);
             msgBody.AppendLine("Your Order #" + order.orderID + " has complete!!");
-            msgBody.AppendLine("<a href=\"https://seshopping.azurewebsites.net/history\">Click here to check shipping status</a>");
+            msgBody.AppendLine("Click here to check shipping status");
+            msgBody.AppendLine("https://seshopping.azurewebsites.net/history");
             IEmail EmailClient = new Email();
             isSend = await EmailClient.SendMailO365(member.memberEmail, "Your Order #" + order.orderID + " has complete!!", msgBody.ToString());
 

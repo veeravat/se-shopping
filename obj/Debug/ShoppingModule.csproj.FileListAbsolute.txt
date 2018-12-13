@@ -59,7 +59,6 @@ C:\Users\TuyMove\Desktop\Tuymove\Project\ShoppingModule\bin\Microsoft.Applicatio
 C:\Users\TuyMove\Desktop\Tuymove\Project\ShoppingModule\bin\Microsoft.AspNet.TelemetryCorrelation.dll
 C:\Users\TuyMove\Desktop\Tuymove\Project\ShoppingModule\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\TuyMove\Desktop\Tuymove\Project\ShoppingModule\bin\Microsoft.Web.Infrastructure.dll
-C:\Users\TuyMove\Desktop\Tuymove\Project\ShoppingModule\bin\Newtonsoft.Json.dll
 C:\Users\TuyMove\Desktop\Tuymove\Project\ShoppingModule\bin\System.Diagnostics.DiagnosticSource.dll
 C:\Users\TuyMove\Desktop\Tuymove\Project\ShoppingModule\bin\System.Net.Http.Formatting.dll
 C:\Users\TuyMove\Desktop\Tuymove\Project\ShoppingModule\bin\System.Web.Helpers.dll
