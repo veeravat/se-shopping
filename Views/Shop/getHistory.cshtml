@@ -24,12 +24,16 @@
                     <tr>
                         <td>@item.orderID</td>
                         <td>
-                            @foreach (var orderItem in item.SESHOP_Shop_Order_Item)
-                            {
-                                <p>@i.@orderItem.SESHOP_Shop_Product.productName x @orderItem.qty</p>
-                                total += orderItem.SESHOP_Shop_Product.productPrice * orderItem.qty;
-                                i += 1;
-                            }
+                            <span >
+                                <ol>
+                                    @foreach (var orderItem in item.SESHOP_Shop_Order_Item)
+                                    {
+                                        <li style="margin-left:20px">@orderItem.SESHOP_Shop_Product.productName x @orderItem.qty</li>
+                                        total += orderItem.SESHOP_Shop_Product.productPrice * orderItem.qty;
+                                        i += 1;
+                                    }
+                                </ol>
+                            </span>
                         </td>
                         <td>
                             @total.ToString("n")
@@ -38,10 +42,9 @@
                             @if (@item.orderStatus == "paymentComplete")
                             {
                                 <span>Waiting for shipment</span>
-                            }   
+                            }
                         </td>
                     </tr>
-                    i = 1;
                     total = 0;
                 }
 

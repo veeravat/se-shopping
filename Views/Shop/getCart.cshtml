@@ -203,10 +203,10 @@
                     totalPrice: @total
                 }).done(function (data) {
                     if (!data.status) {
-                        alert("Add cart fail !!")
+                        alert("Payment fail !!")
                     } else {
-                        alert("Successful add cart!!")
-                        //window.location.href = "/";
+                        alert("Payment Successfully!!")
+                        window.location.href = "/history";
                     }
                     console.log(data);
                 })
