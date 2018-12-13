@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace ShoppingModule.Controllers
 {
-    public class MemberController : Controller
+    public class MemberController : Controller, IMemberController
     {
         private seshop db = new seshop();
 

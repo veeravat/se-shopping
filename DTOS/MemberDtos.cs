@@ -3,7 +3,7 @@ using System.Text;
 
 namespace ShoppingModule.DTOS
 {
-    public class MemberLoginDtos
+    public class MemberLoginDtos : IMemberLoginDtos
     {
         public string email { get; set; }
 
@@ -27,7 +27,7 @@ namespace ShoppingModule.DTOS
             set { pswd = value; }
         }
     }
-    public class MemberRegisterDtos
+    public class MemberRegisterDtos : IMemberRegisterDtos
     {
         public string memberName { get; set; }
         public string memberTel { get; set; }

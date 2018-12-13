@@ -5,12 +5,12 @@ using System.Web;
 
 namespace ShoppingModule.DTOS
 {
-    public class CartDto
+    public class CartDto : ICartDto
     {
         public int productID { get; set; }
         public int qty { get; set; }
     }
-    public class PaymentDto
+    public class PaymentDto : IPaymentDto
     {
         public string cardname { get; set; }
         public string cardNumber { get; set; }
